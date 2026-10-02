@@ -12,7 +12,7 @@ Link the `TapPayKit` product and `import goSellSDK`. Tags match the goSellSDK ve
 
 ## Build a new version
 
-Run the **Build XCFrameworks** workflow with the goSellSDK version. It runs only when triggered, builds with the runner image's default (latest released) Xcode, commits `Frameworks/`, and tags the version. Consumers need that Xcode or newer, since older compilers can't read newer module interfaces.
+Run the **Build XCFrameworks** workflow with the goSellSDK version. It runs only when triggered, builds with the runner image's default (latest released) Xcode, commits `Frameworks/` on top of `main`, and pushes only the version tag (`main` requires signed commits, so the frameworks live under the tags). Consumers need that Xcode or newer, since older compilers can't read newer module interfaces.
 
 Locally (needs CocoaPods): `GOSELL_VERSION=2.3.43 scripts/build_xcframeworks.sh`
 

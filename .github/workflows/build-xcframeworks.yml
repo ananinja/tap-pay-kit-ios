@@ -31,4 +31,4 @@ jobs:
           git add Frameworks
           git commit -m "Build goSellSDK $VERSION with $(xcodebuild -version | head -1)"
           git tag "$VERSION"
-          git push origin HEAD "$VERSION"
+          git push origin "$VERSION"
