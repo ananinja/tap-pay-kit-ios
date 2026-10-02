@@ -1,0 +1,37 @@
+name: Build XCFrameworks
+
+on:
+  workflow_dispatch:
+    inputs:
+      gosell_version:
+        description: goSellSDK version to build
+        required: true
+        default: 2.3.43
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select Xcode version
+        run: sudo xcode-select --switch /Applications/Xcode_26.2.app
+
+      - name: Build
+        env:
+          GOSELL_VERSION: ${{ inputs.gosell_version }}
+        run: scripts/build_xcframeworks.sh
+
+      - name: Commit and tag
+        env:
+          VERSION: ${{ inputs.gosell_version }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Frameworks
+          git commit -m "Build goSellSDK $VERSION with $(xcodebuild -version | head -1)"
+          git tag "$VERSION"
+          git push origin HEAD "$VERSION"
