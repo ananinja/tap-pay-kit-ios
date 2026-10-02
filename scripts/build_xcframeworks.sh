@@ -65,7 +65,7 @@ for DEVICE_FRAMEWORK in "$WORK_DIR"/build/Release-iphoneos/*/*.framework; do
 done
 
 find "$STAGING_DIR/goSellSDK.xcframework" -name '*.swiftinterface' -exec \
-  sed -i '' '/^extension goSellSDK::PayButton : TapAdditionsKitV2::ClassProtocol {}$/d' {} +
+  sed -i '' -E '/^extension goSellSDK(::|\.)PayButton : TapAdditionsKitV2(::|\.)ClassProtocol \{\}$/d' {} +
 
 echo 'import goSellSDK' > "$WORK_DIR/probe.swift"
 for SLICE in "ios-arm64:iphoneos:arm64-apple-ios$DEPLOYMENT_TARGET" \
