@@ -28,8 +28,8 @@ ruby -rxcodeproj -e '
 
 pod install
 
-grep -rlE '^import .*\.`in`\.' Pods --include='*.swift' \
-  | xargs -r sed -i '' -E 's/^import .*\.`in`\..*$/import Darwin/'
+find Pods -name '*.swift' -exec sed -i '' -E \
+  's/^import[[:space:]]+(struct|class|enum|protocol|func|var|let|typealias)[[:space:]]+([A-Za-z_][A-Za-z0-9_]*)\.[^.[:space:]]+\..*$/import \2/' {} +
 
 for SLICE in "iphoneos:arm64" "iphonesimulator:arm64 x86_64"; do
   IFS=: read -r SDK ARCHS <<< "$SLICE"
